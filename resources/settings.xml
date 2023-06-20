@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="RTD Settings" name="rtd_settings">
+        <setting id="username" type="text" label="Username" default="" />
+        <setting id="password" type="text" label="Password" default="" />
+        <setting id="quality" type="enum" label="Video Quality" default="720p">
+            <option label="360p" value="360p" />
+            <option label="480p" value="480p" />
+            <option label="720p" value="720p" />
+            <option label="1080p" value="1080p" />
+        </setting>
+    </category>
+</settings>
