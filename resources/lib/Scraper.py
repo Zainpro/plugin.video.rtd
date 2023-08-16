@@ -18,13 +18,22 @@ class Scraper(object):
         "On-air":       Config.RTD_URL_ON_AIR,
         "Films":        Config.RTD_URL_FILMS,
         "Series":       Config.RTD_URL_SERIES,
-        "Shows":        Config.RTD_URL_SHOWS
+        "Shows":        Config.RTD_URL_SHOWS,
+        "More":         Config.RT_URL_MORE
     }
-#    Extracts film title, poster url and href page url     
-    _REGEX_films_page_list = re.compile(r'for__name">(.*?)<[\s\S]*?<div class="film_data_container"[\s\S]*?image: url\(\'(.*?)\'\)[\s\S]*?href="(.*?)">watch film<',re.DOTALL)
+#    Extracts title, films poster and href page url     
+    _REGEX_films_page_list = re.compile(r'for__name">(.*?)<[\s\S]*?<div class="film_data_container"[\s\S]*?image: url\(\'(.*?)\'\)[\s\S]*?href="(\/films.*?)">watch film<',re.DOTALL)
+
+#    Extracts series poster, href page url and title  
+    _REGEX_series_page_list = re.compile(r'<li class="list-2__item">[\s\S]*?url\(\'(.*?)\'\)"><\/div>[\s\S]*?href="(\/series.*?)">(.*?)<\/a>',re.DOTALL)
+    
+#    Extracts shows poster, href page url and title  
+    _REGEX_shows_page_list = re.compile(r'<li class="list-2__item">[\s\S]*?url\(\'(.*?)\'\)"><\/div>[\s\S]*?href="(\/shows.*?)">(.*?)<\/a>',re.DOTALL)
+
+#    Extracts more poster url, title, and href page url    
+    _REGEX_more_page_list = re.compile(r'<noscript><img src="(.*?)" class="media__item media__item_ratio [^"]*" alt="([^"]*?)".*?><strong class="card__header card__header_effect-sadie"><a class="link link_hover" href="(.*?)">',re.DOTALL)    
 
     def get_streams_page_in_a_string(self, url):
-#        print("URL:", url)  # Add this line for debugging
         headers = {"User-Agent": USER_AGENT}
         req = urllib.request.Request(url, headers=headers)
         response = urllib.request.urlopen(req)

@@ -1,11 +1,9 @@
 # -*- coding=utf8 -*-
 #******************************************************************************
-# Main.py
+# Films.py
 #------------------------------------------------------------------------------
 # RTD
-#******************************************************************************
-# This is the "plugin.video.rtd/resources/lib/Main.py"   
-             
+#******************************************************************************             
 import re
 import urllib.request
 from urllib.request import urlopen
@@ -14,9 +12,10 @@ from urllib.parse import urlparse
 from resources.lib.Config import Config
 from resources.lib.Scraper import Scraper
 
-
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"    
-        
+USER_AGENT2 = "Mozilla/5.0 (iPad; CPU OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B410 Safari/600.1.4"
+USER_AGENT3 = "User-Agent=Mozilla/5.0 (iPad; CPU OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B410 Safari/600.1.4"
+       
 class Films(Scraper):
     
     def __init__(self):
@@ -25,13 +24,7 @@ class Films(Scraper):
     def films_page_list(self, category):
         "Provides a list of films title, poster and href"
         result = self._REGEX_films_page_list.findall(self._get_all_films_page(category))
-        return result 
-
-    @staticmethod 
-    def get_thumbnail_base_url():   #No required
-        "Provides the current base URL of the thumbnails"
-        url = Films().films_page_list("Featured", 1)[0][1]
-        return url[0:url.rfind("/")]    
+        return result  
     
     def _get_all_films_page(self, category):
         "Returns all the films homepage in a string."
@@ -40,7 +33,7 @@ class Films(Scraper):
             
 class Scraper2:    
     def get_film_page_in_a_string(self, url):
-        headers = {"User-Agent": "Mozilla/5.0"}
+        headers = {"User-Agent": USER_AGENT}
         req = urllib.request.Request(url, headers=headers)
         response = urllib.request.urlopen(req)
         film_page = response.read().decode("utf-8")
